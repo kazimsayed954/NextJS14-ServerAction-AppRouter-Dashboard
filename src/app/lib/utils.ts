@@ -14,11 +14,17 @@ export const connectToDb =async()=>{
 
 export const DebounceFn = function(fn:any,delay:number=1000){
     let timer:any;
+    //@ts-ignore
     return function(...args){
         clearTimeout(timer);
+    //@ts-ignore
         const context:unknown = this;
         timer=setTimeout(()=>{
             fn.apply(context,args)
         },delay)
     }
+}
+
+export const stringToBool = function(value:string){
+    return value === "true";
 }

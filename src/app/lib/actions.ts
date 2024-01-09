@@ -7,13 +7,13 @@ import { redirect } from "next/navigation";
 import bcrypt from 'bcrypt';
 import { signIn } from "../auth";
 
-export const addUser = async(formData:any)=>{
+export const addUser = async(formData:FormData)=>{
     // "use server";
     const {username,email,password,phone,address,isAdmin,isActive} = Object.fromEntries(formData);
     try {
         connectToDb();
         const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password,salt);
+        const hashedPassword = await bcrypt.hash(password.toString(),salt);
         const newUser= new User({username,email,password:hashedPassword,phone,address,isAdmin,isActive});
         await newUser.save();
       
@@ -25,7 +25,7 @@ export const addUser = async(formData:any)=>{
     redirect('/dashboard/users');
 }
 
-export const addProduct = async(formData:any)=>{
+export const addProduct = async(formData:FormData)=>{
     // "use server";
     const {title,description,category,price,stock,color,size} = Object.fromEntries(formData);
     try {
@@ -42,7 +42,7 @@ export const addProduct = async(formData:any)=>{
     redirect('/dashboard/products');
 }
 
-export const deleteProduct = async(formData:any)=>{
+export const deleteProduct = async(formData:FormData)=>{
     const {id} = Object.fromEntries(formData);
     
     try {
@@ -57,7 +57,7 @@ export const deleteProduct = async(formData:any)=>{
     revalidatePath('/dashboard/products');
 }
 
-export const deleteUser = async(formData:any)=>{
+export const deleteUser = async(formData:FormData)=>{
     const {id} = Object.fromEntries(formData);
     
     try {
@@ -72,13 +72,16 @@ export const deleteUser = async(formData:any)=>{
     revalidatePath('/dashboard/users');
 }
 
-export const updateUser = async(formData:any)=>{
+export const updateUser = async(formData:FormData)=>{
     // "use server";
     const {id,username,email,password,phone,address,isAdmin,isActive} = Object.fromEntries(formData);
     try {
         connectToDb();
         const updateFields:any = {username,email,password,phone,address,isAdmin,isActive};
-        Object.keys(updateFields)?.forEach((key)=> updateFields[key]==="" || undefined && delete updateFields[key])
+        Object.keys(updateFields)?.forEach((key)=>{
+             if(updateFields[key]==="" || updateFields[key]=== undefined || updateFields[key]?.length===0){ 
+                delete updateFields[key]
+            }})
         await User?.findByIdAndUpdate(id,updateFields);
       
     } catch (error) {
@@ -89,12 +92,15 @@ export const updateUser = async(formData:any)=>{
     redirect('/dashboard/users');
 }
 
-export const updateProduct = async(formData:any)=>{
+export const updateProduct = async(formData:FormData)=>{
     const {id,title,description,category,price,stock,color,size} = Object.fromEntries(formData);
     try {
         connectToDb();
         const updateFields:any = {title,description,category,price,stock,color,size};
-        Object.keys(updateFields)?.forEach((key)=> updateFields[key]==="" || undefined && delete updateFields[key])
+        Object.keys(updateFields)?.forEach((key)=>{
+            if(updateFields[key]==="" || updateFields[key]=== undefined || updateFields[key]?.length===0){ 
+               delete updateFields[key]
+           }})
         await Product?.findByIdAndUpdate(id,updateFields);
       
     } catch (error) {
@@ -105,7 +111,7 @@ export const updateProduct = async(formData:any)=>{
     redirect('/dashboard/products');
 }
 
-export const authenticate = async(previousState:any,formData:any)=>{
+export const authenticate = async(previousState:any,formData:FormData)=>{
     const { username, password } = Object.fromEntries(formData);
 
     try {

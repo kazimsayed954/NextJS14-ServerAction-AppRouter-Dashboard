@@ -4,6 +4,7 @@ import styles from "./user.module.css";
 import Image from "next/image";
 import Pagination from "../dashboard/pagination/Pagination";
 import { deleteUser } from "@/app/lib/actions";
+import { stringToBool } from "@/app/lib/utils";
 
 const UserPage = ({ users,count }: any) => {
   return (
@@ -42,8 +43,8 @@ const UserPage = ({ users,count }: any) => {
               </td>
               <td>{user?.email}</td>
               <td>{user?.createdAt?.toString()?.slice(4,16)}</td>
-              <td>{user?.idAdmin === "true" ? "Admin" : "Client"}</td>
-              <td>{user?.isActive === "true" ? "Active" : "Passive"}</td>
+              <td>{stringToBool(user?.isAdmin)? "Admin" : "Client"}</td>
+              <td>{stringToBool(user?.isActive) ? "Active" : "Passive"}</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href={`/dashboard/users/${user?.id}`}>

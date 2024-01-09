@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { authConfig } from "./authconfig";
-import { connectToDb } from "./lib/utils";
+import { connectToDb, stringToBool } from "./lib/utils";
 import { User } from "./lib/models";
 import bcrypt from "bcrypt";
 
@@ -10,7 +10,7 @@ const login = async (credentials:any) => {
     connectToDb();
     const user:any = await User.findOne({ username: credentials.username });
 
-    if (!user || !user.isAdmin) throw new Error("Wrong credentials!");
+    if (!user || !stringToBool(user.isAdmin)) throw new Error("Wrong credentials!");
 
     const isPasswordCorrect = await bcrypt.compare(
       credentials.password,
