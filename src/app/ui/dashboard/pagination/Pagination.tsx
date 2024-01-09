@@ -7,12 +7,11 @@ const Pagination = ({ count }: any) => {
   const searchParams = useSearchParams();
   const pathName = usePathname();
   const { replace } = useRouter();
-
   const params: any = new URLSearchParams(searchParams);
-  const ITEM_PER_PAGE = 2;
+  const ITEM_PER_PAGE = 10;
   const pageNumber = parseInt(params.get("page")) || 1;
-  const hasPrev = ITEM_PER_PAGE * (pageNumber - 1) > 0;
-  const hasNext = ITEM_PER_PAGE * pageNumber + ITEM_PER_PAGE < count;
+  const hasPrev = pageNumber > 1; 
+  const hasNext = ITEM_PER_PAGE * pageNumber < count;
 
   const handleChangePage = (type: string) => {
     type === "prev"
