@@ -27,11 +27,11 @@ export const addUser = async(formData:FormData)=>{
 
 export const addProduct = async(formData:FormData)=>{
     // "use server";
-    const {title,description,category,price,stock,color,size} = Object.fromEntries(formData);
+    const {title,description,category,price,stock,color,size,img} = Object.fromEntries(formData);
     try {
         connectToDb();
         
-        const newProduct= new Product({title,description,category,price,stock,color,size});
+        const newProduct= new Product({title,description,category,price,stock,color,size,img});
         await newProduct.save();
       
     } catch (error) {

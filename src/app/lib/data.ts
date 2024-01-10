@@ -7,7 +7,8 @@ export const fetchUsers = async(q:any,page:number)=>{
     try {
         connectToDb();
         const count = await User?.find({username:{$regex:regexExp}}).count();
-        const users = await User?.find({username:{$regex:regexExp}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page-1));
+        const users = await User?.find({username:{$regex:regexExp}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page-1)).sort({ createdAt: -1 })
+        ;
         return {count,users}
     } catch (error) {
         console.log(error);
@@ -29,11 +30,11 @@ export const fetchUser = async(id:string)=>{
 
 export const fetchProducts = async(q:any,page:number)=>{
     const regexExp = new RegExp(q,"i");
-    const ITEM_PER_PAGE = 2;
+    const ITEM_PER_PAGE = 10;
     try {
         connectToDb();
         const count = await Product?.find({title:{$regex:regexExp}}).count();
-        const products = await Product?.find({title:{$regex:regexExp}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page-1));
+        const products = await Product?.find({title:{$regex:regexExp}}).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page-1)).sort({ createdAt: -1 });
         return {count,products}
     } catch (error) {
         console.log(error);

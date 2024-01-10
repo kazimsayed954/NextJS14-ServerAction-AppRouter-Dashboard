@@ -9,6 +9,8 @@ import {
   MdOutlineSettings,
   MdHelpCenter,
   MdLogout,
+  MdSecurity,
+  MdMonitorWeight,
 } from "react-icons/md";
 import styles from "./sidebar.module.css";
 import MenuLink from "./menuLink/menuLink";
@@ -72,6 +74,21 @@ const menuItems = [
         title: "Help",
         path: "/dashboard/help",
         icon: <MdHelpCenter />,
+      },
+    ],
+  },
+  {
+    title: "SSR VS CSR",
+    list: [
+      {
+        title: "SSR",
+        path: "/dashboard/products/ssr",
+        icon: <MdSecurity />,
+      },
+      {
+        title: "CSR",
+        path: "/dashboard/products/csr",
+        icon: <MdMonitorWeight />,
       },
     ],
   },

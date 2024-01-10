@@ -17,6 +17,7 @@ const AddProduct = () => {
         <input type="number" placeholder="stock" name="stock" required />
         <input type="text" placeholder="color" name="color" required />
         <input type="text" placeholder="size" name="size" required />
+        <input type="text" placeholder="img" name="img" />
         <textarea name="description" id="description"  rows={16} placeholder="description"></textarea>
         <button type="submit">Submit</button>
       </form>

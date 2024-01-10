@@ -9,7 +9,7 @@ export default async function ProductsPage({searchParams}:any) {
 
   return (
     <div>
-      <Product products={products} />
+      <Product products={products} count={count} />
     </div>
   );
 }

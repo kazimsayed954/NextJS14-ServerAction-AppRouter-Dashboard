@@ -20,8 +20,9 @@ const Product = ({ products, count }: any) => {
             <td>Title</td>
             <td>Description</td>
             <td>Price</td>
-            <td>Created At</td>
+            <td>Category</td>
             <td>Stock</td>
+            <td>Created At</td>
             <td>Action</td>
           </tr>
         </thead>
@@ -42,8 +43,9 @@ const Product = ({ products, count }: any) => {
               </td>
               <td>{product?.description}</td>
               <td>{product?.price}</td>
-              <td>{product?.createdAt?.toString()?.slice(4, 16)}</td>
+              <td>{product?.category?.toUpperCase()}</td>
               <td>{product?.stock}</td>
+              <td>{product?.createdAt?.toString()?.slice(4, 16)}</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href={`/dashboard/products/${product?.id}`}>
